@@ -21,21 +21,23 @@
             <td>{{ $company->id }}</td>
             <td>{{ $company->name }}</td>
             <td>{{ $company->email }}</td>
-            <td> Logo
-              <!-- <img src="{{$company->logo}}" alt="Company logo" height="50" width="50"> -->
+            <td> 
+              @if ($company->logo)
+                <img src="{{url('/storage/${$company->logo}')}}" alt="Company logo" height="50" width="50">
+                @else
+                <img src="{{url('/storage/logo1.png')}}" alt="Default logo" height="50" width="50">
+               @endif
+              
+             
             </td>
             
             <td>{{ $company->website }}</td>
             <td>{{ $company->adress }}</td>
-            <td><a href="{{url('companies.edit', ['id' => $company->id])}}" class = "btn btn-info">Edit</a></td>
-            <td><a href="{{url('companies.show',  $company->id)}}" class = "btn btn-info">Show details</a></td>
-            <td>
-              <form id="destroy-form" action="{{ url('companies.destroy', ['id' => $company->id]) }}" method="POST" >
-                  @method('DELETE')
-                  @csrf
-                  <input type="submit" class="btn btn-danger" value="Delete">
-              </form>
-            </td>
+            
+            <td><a href="{{route('companies.show',  $company->id)}}" class = "btn btn-info">Show details</a></td>
+            <td><a href="{{route('add.comment',  $company->id)}}" class = "btn btn-info">Add coments</a></td>
+
+            
           </tr>
         @endforeach
       </table>

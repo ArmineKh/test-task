@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 $factory->define(Employe::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'surname' => $faker->lastname,
         'email' => $faker->unique()->safeEmail,
         'phone' => $faker->phoneNumber,
         'salary' => $faker->randomNumber,

@@ -18,7 +18,6 @@ class CreateEmployesTable extends Migration
             $table->unsignedBigInteger('company_id')->references('id')->on('companies')->onDelete('cascade'); 
             $table->unsignedBigInteger('position_id')->references('id')->on('positions')->onDelete('cascade'); 
             $table->string('name');
-            $table->string('surname');
             $table->string('email');
             $table->string('phone');
             $table->integer('salary');

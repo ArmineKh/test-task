@@ -9,6 +9,10 @@ use Storage;
 
 class CompanyController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,27 +25,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -49,10 +32,11 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-       $company = Company::find($id);
-        return view('company.show',['company'=> $company]);
+        $company = Company::find($id);
+       $companyEmployes = Company::find($id)->with('employes')->get();
+       $companyPositions = Company::find($id)->with('positions')->get();
+        return view('company.show',['company'=> $company, 'companyEmployes' => $companyEmployes, 'companyPositions' => $companyPositions]);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -61,6 +45,7 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
+
         $company = Company::find($id);
         return view('company.edit',['company'=> $company]);
     }
@@ -72,13 +57,13 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateCompanieRequest $request, $id)
     {
         $logoName = '';
         if ($request->file('logo'))
         {
-         $logoName = $request->file('logo')->store('/public');
-         $logoName = str_replace('public', 'storage', $logoName);
+            $logoName = $request->input('name').'.'.$request->file('logo')->getClientOriginalExtension();
+            $request->file('logo')->move(public_path('storage'), $logoName);
      }
 
      $comp = Company::find($request->input('id'))
@@ -87,7 +72,7 @@ class CompanyController extends Controller
         'logo' => $logoName,
         'website' => $request->input('website')]);
 
-     return redirect()->route('company.index')->with('info','Company Updated Successfully');
+     return redirect()->route('companies.index')->with('info','Company Updated Successfully');
  }
 
     /**
@@ -100,6 +85,8 @@ class CompanyController extends Controller
     {
        $company = Company::find($id);
        $company->delete();
-       return redirect()->route('company.index');
+       return redirect()->route('companies.index');
    }
+
+   
 }

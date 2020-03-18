@@ -14,6 +14,7 @@ $factory->define(Company::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'website' => $faker->email,
         'adress' => $faker->address,
+        'password' => Hash::make('password'),
         
     ];
 });

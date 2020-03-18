@@ -3,11 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Company extends Model
+
+class Company extends Authenticatable
 {
 	protected $table = 'companies';
-   protected $fillable = ['name', 'email', 'website', 'adress'];
+   protected $fillable = ['name', 'email', 'website', 'adress', 'logo', 'password'];
+
+protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+ public function getAuthPassword()
+    {
+      return $this->password;
+    }
 
    public function employes()
 	{
@@ -16,6 +27,11 @@ class Company extends Model
 
 	public function positions()
 	{
-		return $this->hasMany('App\Models\Position', 'position_id', 'id');
+		return $this->hasMany('App\Models\Position', 'id','position_id');
+	}
+
+	public function comments()
+	{
+		return $this->hasMany('App\Models\Comment', 'id','company_id');
 	}
 }

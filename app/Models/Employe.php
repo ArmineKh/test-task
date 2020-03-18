@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Employe extends Model
 {
 	protected $table = 'employes';
-   protected $fillable = ['company_id', 'position_id', 'name', 'surname', 'email', 'phone', 'salary'];
+   protected $fillable = ['company_id', 'position_id', 'name', 'email', 'phone', 'salary'];
+   public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id', 'id');
+    }
+    public function position()
+    {
+        return $this->belongsTo('App\Models\Position', 'position_id', 'id');
+    }
 }
