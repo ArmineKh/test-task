@@ -12,10 +12,10 @@ use Storage;
 
 class CompanyController extends Controller
 {
-     public function __construct()
-    {
-        $this->middleware('auth');
-    }
+   public function __construct()
+   {
+    $this->middleware('auth');
+}
     /**
      * Display a listing of the resource.
      *
@@ -36,19 +36,13 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::find($id);
-       // $companyEmployes = Company::find($id)->with('employes')->get();
-       $companyPositions = Position::where('company_id', $id)->get();
-       $companyEmployes = Employe::where('company_id', $id)->get();
-       // foreach ($companyPositions as $key) {
-       //     # code...
-       //  echo'<pre>',print_r($key),'</pre>';
-       // }
-       // die;
+        $companyPositions = Position::where('company_id', $id)->get();
+        $companyEmployes = Employe::where('company_id', $id)->get();
         $companyComments = Comment::where('comment_company_id', $id);
         return view('company.show',['company'=> $company, 'companyEmployes' => $companyEmployes, 
             'companyPositions' => $companyPositions,
             'companyComments' => $companyComments ? $companyComments : ''
-    ]);
+        ]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -77,16 +71,16 @@ class CompanyController extends Controller
         {
             $logoName = $request->input('name').'.'.$request->file('logo')->getClientOriginalExtension();
             $request->file('logo')->move(public_path('storage'), $logoName);
-     }
+        }
 
-     $comp = Company::find($request->input('id'))
-     ->update(['name' => $request->input('name'),
-        'email' => $request->input('email'),
-        'logo' => $logoName,
-        'website' => $request->input('website')]);
+        $comp = Company::find($request->input('id'))
+        ->update(['name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'logo' => $logoName,
+            'website' => $request->input('website')]);
 
-     return redirect()->route('companies.index')->with('info','Company Updated Successfully');
- }
+        return redirect()->route('companies.index')->with('info','Company Updated Successfully');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -96,10 +90,10 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-       $company = Company::find($id);
-       $company->delete();
-       return redirect()->route('companies.index');
-   }
+     $company = Company::find($id);
+     $company->delete();
+     return redirect()->route('companies.index');
+ }
 
-   
+ 
 }
