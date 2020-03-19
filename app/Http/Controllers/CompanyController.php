@@ -36,9 +36,9 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::find($id);
-        $companyPositions = Position::where('company_id', $id)->get();
-        $companyEmployes = Employe::where('company_id', $id)->get();
-        $companyComments = Comment::where('comment_company_id', $id);
+        $companyEmployes = $company->employes()->where('company_id', $id)->get();
+        $companyPositions = $company->positions()->where('company_id', $id)->get();
+        $companyComments = $company->comments()->where('company_id', $id)->get();
         return view('company.show',['company'=> $company, 'companyEmployes' => $companyEmployes, 
             'companyPositions' => $companyPositions,
             'companyComments' => $companyComments ? $companyComments : ''

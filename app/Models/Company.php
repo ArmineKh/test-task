@@ -27,11 +27,11 @@ protected $hidden = [
 
 	public function positions()
 	{
-		return $this->hasMany('App\Models\Position', 'id','position_id');
+		return $this->hasMany('App\Models\Position');
 	}
 
 	public function comments()
 	{
-		return $this->hasMany('App\Models\Comment', 'id','company_id');
+		return $this->hasMany('App\Models\Comment');
 	}
 }

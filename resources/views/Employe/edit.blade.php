@@ -27,7 +27,6 @@
               
             @endforeach
           </select>
-          <!-- <input type="text" name = "position" id = "position" class="form-control" required value = "{{$employe->position->position_name}}"> -->
         </div>
 
         <div class="form-group">

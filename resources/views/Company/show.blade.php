@@ -46,7 +46,7 @@
 <div class="container">
   @foreach($companyComments as $comment)
 <div class="row comment">
-  <p>{{$comment-body}}</p>
+  <p>{{$comment->body}}</p>
 </div>
 @endforeach
 </div>
@@ -69,7 +69,8 @@
             <td>{{ $employe->id }}</td>
             <td>{{ $employe->name }}</td>
             <td>{{ $employe->email }}</td>
-            <td>{{$companyPositions->where('id', $employe->position_id)}}</td>
+        
+            <td>{{$companyPositions->where('id', $employe->position_id)->first()->position_name}}</td>
             <td>{{ $employe->phone }}</td>
             <td>{{ $employe->salary }}</td>
             <td><a href="{{route('employes.edit', $employe->id)}}" class = "btn btn-info">Edit</a></td>
