@@ -18,6 +18,17 @@
           <label for="phone">Phone:</label>
           <input type="text" name = "phone" id = "phone" class="form-control" required value = "{{$employe->phone}}">
         </div>
+        <div class="form-group">
+          <label for="position">Position:</label>
+          <select id="position">
+            <option value="{{$employe->position->position_name}}" selected>{{$employe->position->position_name}}</option>
+            @foreach ($company->positions as $key )
+            <option value="{{$key->position_name}}">{{$key->position_name}}</option>
+              
+            @endforeach
+          </select>
+          <!-- <input type="text" name = "position" id = "position" class="form-control" required value = "{{$employe->position->position_name}}"> -->
+        </div>
 
         <div class="form-group">
           <label for="salary">Salary:</label>

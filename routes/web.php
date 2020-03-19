@@ -30,12 +30,12 @@ Route::get('/employes/create/{id}', [
 
 Route::get('/comments/{id}', [
 	'as' => 'add.comment',
-	'uses' => 'CommentsController@store'
+	'uses' => 'CommentsController@create'
 ]);
 
 Route::post('/comments', [
 	'as' => 'post.comment',
-	'uses' => 'CommentsController@create'
+	'uses' => 'CommentsController@store'
 ]);
 
 Auth::routes();

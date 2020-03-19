@@ -15,6 +15,7 @@ class CreatePositionsTable extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('company_id')->references('id')->on('companies')->onDelete('cascade'); 
             $table->string('position_name');
             $table->timestamps();
         });

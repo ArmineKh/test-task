@@ -22,6 +22,7 @@ class CommentsController extends Controller
     public function store(CommentRequest $request)
     {
         $company = Company::findOrFail($request->comment_company_id);
+        dd($company);
  
         Comment::create([
             'body' => $request->body,

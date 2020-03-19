@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Company Show')
 @section('content')
-
+<div class="container">
 <div class="row">
    <table class="table">
         <tr>
@@ -43,6 +43,14 @@
   <a href="{{route('employe.create.company_id', $company->id)}}" class = "btn btn-info">Create Employe</a>
 </div>
 
+<div class="container">
+  @foreach($companyComments as $comment)
+<div class="row comment">
+  <p>{{$comment-body}}</p>
+</div>
+@endforeach
+</div>
+
   <div class="row">
     <div class="col-sm-12">
       <table class="table">
@@ -75,7 +83,11 @@
           </tr>
         @endforeach
       </table>
+</div>
+</div>
+  
 
+</div>
 
 
 @endsection

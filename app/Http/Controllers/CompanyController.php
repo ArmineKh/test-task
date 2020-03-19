@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Comment;
+use App\Models\Employe;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCompanieRequest;
 use Storage;
@@ -33,9 +36,19 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::find($id);
-       $companyEmployes = Company::find($id)->with('employes')->get();
-       $companyPositions = Company::find($id)->with('positions')->get();
-        return view('company.show',['company'=> $company, 'companyEmployes' => $companyEmployes, 'companyPositions' => $companyPositions]);
+       // $companyEmployes = Company::find($id)->with('employes')->get();
+       $companyPositions = Position::where('company_id', $id)->get();
+       $companyEmployes = Employe::where('company_id', $id)->get();
+       // foreach ($companyPositions as $key) {
+       //     # code...
+       //  echo'<pre>',print_r($key),'</pre>';
+       // }
+       // die;
+        $companyComments = Comment::where('comment_company_id', $id);
+        return view('company.show',['company'=> $company, 'companyEmployes' => $companyEmployes, 
+            'companyPositions' => $companyPositions,
+            'companyComments' => $companyComments ? $companyComments : ''
+    ]);
     }
     /**
      * Show the form for editing the specified resource.

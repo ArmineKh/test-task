@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employe;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateEmployeRequest;
 use Storage;
@@ -76,7 +77,8 @@ class EmployeController extends Controller
     public function edit($id)
     {
          $employe = Employe::find($id);
-        return view('Employe.edit',['employe'=> $employe]);
+         $company = Company::find($employe->company_id);
+        return view('Employe.edit',['employe'=> $employe, 'company'=>$company]);
     }
 
     /**
