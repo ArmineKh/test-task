@@ -11,7 +11,8 @@
          <textarea id="body" name="body" rows="4" cols="50"></textarea>
        </div>
        
-         <input type="hidden" name = "company_id" id = "company_id" class="form-control" value="{{$company_id}}" required>
+         <input type="hidden" name = "comment_company_id" id = "comment_company_id" class="form-control" value="{{$company_id}}" required>
+         
 
 
        <button type = "submit" class = "btn btn-success">Send</button>

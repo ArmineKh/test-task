@@ -14,7 +14,6 @@
           <th>Logo</th>
           <th>Web site</th>
           <th>Address</th>
-
         </tr>
         @foreach($companyes as $company)
           <tr class = "text-center">
@@ -23,21 +22,14 @@
             <td>{{ $company->email }}</td>
             <td> 
               @if ($company->logo)
-                <img src="{{url('/storage/${$company->logo}')}}" alt="Company logo" height="50" width="50">
+                <img src="{{url('/storage/'.$company->logo)}}" alt="Company logo" height="50" width="50">
                 @else
                 <img src="{{url('/storage/logo1.png')}}" alt="Default logo" height="50" width="50">
                @endif
-              
-             
-            </td>
-            
             <td>{{ $company->website }}</td>
             <td>{{ $company->adress }}</td>
-            
             <td><a href="{{route('companies.show',  $company->id)}}" class = "btn btn-info">Show details</a></td>
             <td><a href="{{route('add.comment',  $company->id)}}" class = "btn btn-info">Add coments</a></td>
-
-            
           </tr>
         @endforeach
       </table>

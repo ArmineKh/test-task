@@ -10,7 +10,7 @@ class Employe extends Model
    protected $fillable = ['company_id', 'position_id', 'name', 'email', 'phone', 'salary'];
    public function company()
     {
-        return $this->belongsTo('App\Models\Company', 'company_id', 'id');
+        return $this->belongsTo('App\Models\Company');
     }
     public function position()
     {

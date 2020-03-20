@@ -20,10 +20,10 @@
         </div>
         <div class="form-group">
           <label for="position">Position:</label>
-          <select id="position">
-            <option value="{{$employe->position->position_name}}" selected>{{$employe->position->position_name}}</option>
+          <select id="position" name="position">
+            <option value="{{$employe->position->id}}" selected>{{$employe->position->position_name}}</option>
             @foreach ($company->positions as $key )
-            <option value="{{$key->position_name}}">{{$key->position_name}}</option>
+            <option value="{{$key->id}}">{{$key->position_name}}</option>
               
             @endforeach
           </select>

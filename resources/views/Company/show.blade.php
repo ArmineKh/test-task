@@ -20,7 +20,7 @@
             <td>{{ $company->email }}</td>
             <td>
               @if ($company->logo)
-                <img src="{{url('/storage/${$company->logo}')}}" alt="Company logo" height="50" width="50">
+                <img src="{{url('/storage/'.$company->logo)}}" alt="Company logo" height="50" width="50">
                 @else
                 <img src="{{url('/storage/logo1.png')}}" alt="Default logo" height="50" width="50">
                @endif
@@ -44,7 +44,8 @@
 </div>
 
 <div class="container">
-  @foreach($companyComments as $comment)
+  
+  @foreach($company->comments()->where('company_id', $company->id)->get() as $comment)
 <div class="row comment">
   <p>{{$comment->body}}</p>
 </div>
@@ -64,13 +65,15 @@
           <th>Salary</th>
 
         </tr> 
-        @foreach($companyEmployes as $employe)
+
+        @foreach($company->employes()->where('company_id', $company->id)->get() as $employe)
           <tr class = "text-center">
             <td>{{ $employe->id }}</td>
             <td>{{ $employe->name }}</td>
             <td>{{ $employe->email }}</td>
-        
-            <td>{{$companyPositions->where('id', $employe->position_id)->first()->position_name}}</td>
+            <td>
+              {{$company->positions()->where('company_id', $company->id)->where('id', $employe->position_id)->first()->position_name}}
+            </td>
             <td>{{ $employe->phone }}</td>
             <td>{{ $employe->salary }}</td>
             <td><a href="{{route('employes.edit', $employe->id)}}" class = "btn btn-info">Edit</a></td>

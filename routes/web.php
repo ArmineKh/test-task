@@ -13,12 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/register', [ 'as' => 'register', 'uses' => 'CompanyController@register']);
+Route::post('/register', [ 'as' => 'register', 'uses' => 'CompanyController@registration']);
+
+Route::get('/login', [ 'as' => 'login', 'uses' => 'CompanyController@login']);
+Route::post('/login', [ 'as' => 'login', 'uses' => 'CompanyController@logInPost']);
+
+Route::post('/logout', [ 'as' => 'logout', 'uses' => 'CompanyController@logout']);
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('companies', 'CompanyController')->except([
     'create', 'store'
-]);
+])->middleware('islogin');
 Route::resource('employes', 'EmployeController')->except([
     'create', 'index', 'show'
 ]);
@@ -38,6 +47,7 @@ Route::post('/comments', [
 	'uses' => 'CommentsController@store'
 ]);
 
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

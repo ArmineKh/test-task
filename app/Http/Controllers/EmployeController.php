@@ -12,13 +12,6 @@ use Storage;
 class EmployeController extends Controller
 {
 
- public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-   
-
     /**
      * Show the form for creating a new resource.
      *
@@ -46,7 +39,7 @@ class EmployeController extends Controller
 
        ]);
 
-        return redirect()->route('companies.index');
+        return redirect()->route('companies.show',  $employee->company->id);
     }
 
 
@@ -73,13 +66,17 @@ class EmployeController extends Controller
      */
     public function update(CreateEmployeRequest $request, $id)
     {
-        $employe = Employe::find($request->input('id'))
+        // dd(Employe::find($id));
+        $employe = Employe::find($id)
      ->update(['name' => $request->input('name'),
         'email' => $request->input('email'),
         'phone' => $request->input('phone'),
-        'salary' => $request->input('salary')]);
+        'salary' => $request->input('salary'),
+        'position_id' => $request->input('position'),
+    ]);
+     $company_id = Employe::find($id)->company->id; 
 
-     return redirect()->route('companies.index');
+     return redirect()->route('companies.show', $company_id);
     }
 
     /**
@@ -92,6 +89,6 @@ class EmployeController extends Controller
     {
         $employe = Employe::find($id);
        $employe->delete();
-       return redirect()->route('companies.index');
+       return redirect()->route('companies.show', $employe->company->id);
     }
 }

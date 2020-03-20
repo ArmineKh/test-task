@@ -8,14 +8,58 @@ use App\Models\Employe;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCompanieRequest;
+use App\Http\Requests\RegisterCompanyRequest;
+use App\Http\Requests\LoginCompanyRequest;
+use Illuminate\Support\Facades\Session;
+use Hash;
 use Storage;
 
 class CompanyController extends Controller
 {
    public function __construct()
    {
-    $this->middleware('auth');
-}
+    // $this->middleware('islogin');
+    }
+
+    public function register(){
+        return view('auth.register');
+    }
+
+    public function registration(RegisterCompanyRequest $request){
+
+         $company = Company::create(['name' => $request->input('name'),
+           'email' => $request->input('email'),
+           'phone' => $request->input('phone'),
+           'password' => Hash::make($request->input('password')),
+
+       ]);
+
+         return redirect()->route('login');
+  
+    }
+
+    public function login(){
+        return view('auth.login');
+    }
+
+    public function logInPost(LoginCompanyRequest $request){
+        $company = Company::where('email', $request->email)->first();
+        if (empty($company)) {
+            Session::flash("errors", ["The email is wrong"]);
+         return redirect()->route('login');
+        } elseif (password_verify($request->password, $company->password)) {
+                Session::put("company", $company);
+         return redirect()->route('companies.index');
+
+        }
+    }
+
+    public function logout(){
+        Session::flush();
+         return redirect()->route('login');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -36,13 +80,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = Company::find($id);
-        $companyEmployes = $company->employes()->where('company_id', $id)->get();
-        $companyPositions = $company->positions()->where('company_id', $id)->get();
-        $companyComments = $company->comments()->where('company_id', $id)->get();
-        return view('company.show',['company'=> $company, 'companyEmployes' => $companyEmployes, 
-            'companyPositions' => $companyPositions,
-            'companyComments' => $companyComments ? $companyComments : ''
-        ]);
+        return view('company.show',['company'=> $company]);
     }
     /**
      * Show the form for editing the specified resource.
